@@ -34,7 +34,7 @@ for(var y=0; y < height; y++){
   document.write("<tr>");
 for(var x=0; x < width; x++){
   if(x==0 || x==width-1 || y==0 || y==height-1){
-    document.write("<td class='wall'></td>");
+    document.write("<td class='wall' ></td>");
   }else{
     document.write("<td class='blank'></td>");
   }
