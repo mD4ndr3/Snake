@@ -34,14 +34,45 @@ for(var y=0; y < height; y++){
   document.write("<tr>");
 for(var x=0; x < width; x++){
   if(x==0 || x==width-1 || y==0 || y==height-1){
-    document.write("<td class='wall' ></td>");
+    document.write("<td class='wall' id='"+x+"-"+y+"'></td>");
   }else{
-    document.write("<td class='blank'></td>");
+    document.write("<td class='blank' id='"+x+"-"+y+"'></td>");
   }
 }
   document.write("</tr>");
 }
 document.write("</table>");
+}
+
+function get(x,y){
+  return document.getElementById(x+'-'+y)
+}
+
+function set(x,y,value){
+  return get(x,y).setAttribute("class",value)
+}
+
+function getAttr(x,y){
+  return get(x,y).getAttribute("class")
+}
+
+function createFruit(){
+var found = false;
+while(!found && length<(width-1)*(height)){
+  var fruitX = Math.floor(1+Math.random()*width);
+  var fruitY = Math.floor(1+Math.random()*height);
+  if(getAttr(fruitX,fruitY)=="blank")
+  found = true;
+  }
+  fX=fruitX;
+  fY=fruitY;
+  set(fX,fY,"fruit");
+}
+
+
+
+function createSnake(){
+
 }
 
 run();
