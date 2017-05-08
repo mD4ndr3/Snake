@@ -108,6 +108,9 @@ function update(){
   snakeX--;
   else if (direction==2)
   snakeX++;
+if(getAttr(snakeX,snakeY)=="snake"){
+  gameOver=true;
+}
 set(snakeX,snakeY,"snake");
 if(snakeX==0 || snakeX==width-1 || snakeY==0|| snakeY==height-1)
 gameOver=true;
