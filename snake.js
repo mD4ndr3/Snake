@@ -8,6 +8,7 @@ var increment = 3; //how much the snake increments after it eats
 
 
 //game variables
+var length = 1;
 var tailX = [snakeX];
 var tailY = [snakeY];
 var fX;
@@ -49,7 +50,7 @@ function get(x,y){
 }
 
 function set(x,y,value){
-  if(get(x,y)!==null)
+  if(x!==null && y  !==null)
   return get(x,y).setAttribute("class",value);
 }
 
@@ -65,9 +66,9 @@ while(!found && length<(width-1)*(height)){
   if(getAttr(fruitX,fruitY)=="blank")
   found = true;
   }
+  set(fruitX,fruitY,"fruit");
   fX=fruitX;
   fY=fruitY;
-  set(fX,fY,"fruit");
 }
 
 window.addEventListener("keypress",function key(){
@@ -82,7 +83,7 @@ else if(direction!=1 && key==100)
 direction = 2;
 if(!running)
  running=true;
- else if(key==32)
+else if(key==32)
  running = false;
 });
 
@@ -97,6 +98,7 @@ if(running && !gameOver){
 
 function update(){
   set(fX,fY,"fruit");
+  updateTail();
   set(tailX[length],tailY[length],"blank")
   if(direction==0)
   snakeY--;
@@ -110,12 +112,20 @@ set(snakeX,snakeY,"snake");
 if(snakeX==0 || snakeX==width-1 || snakeY==0|| snakeY==height-1)
 gameOver=true;
 if(snakeX==fX && snakeY==fY){
-  createFruit()
-  length+=1
+  console.log(length);
+  createFruit();
+  length+=1;
 }
 }
 
 function updateTail(){
+for(var i = length; i>0;i--){
+  tailX[i] = tailX[i-1];
+  tailY[i] = tailY[i-1];
+}
+tailX[0] = snakeX;
+tailY[0] = snakeY;
+
 }
 
 function createSnake(){
