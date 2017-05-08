@@ -12,7 +12,7 @@ var tailX = [snakeX];
 var tailY = [snakeY];
 var fX;
 var fY;
-var running;
+var running = false;
 var gameOver = false;
 var direction =-1; // up = 0
 var int;
@@ -45,15 +45,16 @@ document.write("</table>");
 }
 
 function get(x,y){
-  return document.getElementById(x+'-'+y)
+  return document.getElementById(x+'-'+y);
 }
 
 function set(x,y,value){
-  return get(x,y).setAttribute("class",value)
+  if(get(x,y)!==null)
+  return get(x,y).setAttribute("class",value);
 }
 
 function getAttr(x,y){
-  return get(x,y).getAttribute("class")
+  return get(x,y).getAttribute("class");
 }
 
 function createFruit(){
@@ -69,10 +70,56 @@ while(!found && length<(width-1)*(height)){
   set(fX,fY,"fruit");
 }
 
+window.addEventListener("keypress",function key(){
+var key = event.keyCode;
+if(direction!=-1 && key==119)
+direction = 0;
+else if(direction!=0 && key==115)
+direction = -1;
+else if(direction!=2 && key==97)
+direction = 1;
+else if(direction!=1 && key==100)
+direction = 2;
+if(!running)
+ running=true;
+ else if(key==32)
+ running = false;
+});
 
+function gameLoop(){
+if(running && !gameOver){
+  update();
+}
+  else if (gameOver){
+    clearInterval(int);
+  }
+}
+
+function update(){
+  set(fX,fY,"fruit");
+  set(tailX[length],tailY[length],"blank")
+  if(direction==0)
+  snakeY--;
+  else if (direction==-1)
+  snakeY++;
+  else if (direction==1)
+  snakeX--;
+  else if (direction==2)
+  snakeX++;
+set(snakeX,snakeY,"snake");
+if(snakeX==0 || snakeX==width-1 || snakeY==0|| snakeY==height-1)
+gameOver=true;
+if(snakeX==fX && snakeY==fY){
+  createFruit()
+  length+=1
+}
+}
+
+function updateTail(){
+}
 
 function createSnake(){
-
+set(snakeX,snakeY,"snake");
 }
 
 run();
